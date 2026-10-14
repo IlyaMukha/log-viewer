@@ -1,0 +1,31 @@
+    <div class="d-flex align-items-center gap-3">
+      <div class="fs-2 hippo-easter-egg" [class.hippo-jumping]="isHippoJumping" (click)="onHippoClick()">{{ isDarkTheme ? '🦛' : '🐎' }}</div>
+      <div>
+        <div class="fs-4 fw-semibold">Log Viewer</div>
+        <div class="text-body-secondary small">
+          Анализ логов BPMSoft / Creatio
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center gap-2">
+      <button type="button"
+        class="theme-toggle"
+        [class.theme-toggle-dark]="isDarkTheme"
+        (click)="onToggleTheme()"
+        [attr.aria-label]="isDarkTheme ? 'Включить светлую тему' : 'Включить тёмную тему'"
+        [title]="isDarkTheme ? 'Светлая тема' : 'Тёмная тема'">
+
+        <span class="theme-toggle-icon theme-toggle-moon">🌙</span>
+        <span class="theme-toggle-icon theme-toggle-sun">☀️</span>
+
+        <span class="theme-toggle-slider"></span>
+      </button>
+
+      <button type="button" class="btn btn-outline-primary d-flex align-items-center gap-2" (click)="onRefreshProjects()" [disabled]="projectsLoading">
+        <span class="fs-5" [class.spinner-border]="projectsLoading" [class.spinner-border-sm]="projectsLoading">
+          <span *ngIf="!projectsLoading">↻</span>
+        </span>
+        Обновить
+      </button>
+    </div>

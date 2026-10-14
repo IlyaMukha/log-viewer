@@ -1,0 +1,7 @@
+{
+  "/LogViewer": {
+    "target": "https://localhost:7285",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

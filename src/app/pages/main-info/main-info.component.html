@@ -1,0 +1,106 @@
+    <main class="col d-flex flex-column bg-body-tertiary">
+      <!-- EMPTY STATE -->
+      <div class="flex-grow-1 d-flex flex-column align-items-center text-center p-4" *ngIf="!loading && logs.length === 0 && !errorMessage">
+        <div class="display-4 text-body-secondary mb-3"> ◫ </div>
+        <div class="fs-4 fw-semibold mb-2"> В данной папке отсутвуют логи </div>
+        <div class="text-body-secondary"> Выберите проект и папку слева, чтобы начать анализ логов. </div>
+      </div>
+
+      <!-- LOADING -->
+      <div class="flex-grow-1 d-flex flex-column align-items-center text-center p-4" *ngIf="loading">
+        <div class="spinner-border text-primary mb-3" role="status"> </div>
+        <div class="fs-4 fw-semibold mb-2"> Анализ логов... </div>
+        <div class="text-body-secondary text-break" [title]="url">{{ url }}</div>
+      </div>
+
+
+      <!-- LOG CONTENT -->
+      <div class="container-fluid p-3 p-lg-4" *ngIf="!loading && (logs.length > 0 || errorMessage)">
+        <!-- LOG HEADER -->
+        <div class="card border-0 shadow-sm mb-3">
+          <div class="card-body">
+            <div class="fs-4 fw-semibold">Результат анализа</div>
+            <div class="text-body-secondary small text-break" [title]="url">{{ url }}</div>
+          </div>
+        </div>
+
+        <!-- STATISTICS -->
+        <div class="row g-3 mb-3" *ngIf="logs.length > 0">
+          <!-- TOTAL -->
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card h-100 border-black shadow-sm">
+              <div class="card-body">
+                <div class="fs-2 fw-bold">{{ logs.length }}</div>
+                <div class="text-body-secondary">Всего</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- EXCEPTIONS -->
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card h-100 border-danger shadow-sm">
+              <div class="card-body">
+                <div class="fs-2 fw-bold text-danger">{{ getCount(LogType.Exseption) }}</div>
+                <div class="text-body-secondary">Ошибки</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- WARNINGS -->
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card h-100 border-warning shadow-sm">
+              <div class="card-body">
+                <div class="fs-2 fw-bold text-warning">{{ getCount(LogType.Warning) }}</div>
+                <div class="text-body-secondary">Предупреждения</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- INFORMATION -->
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card h-100 border-info shadow-sm">
+              <div class="card-body">
+                <div class="fs-2 fw-bold text-info">{{ getCount(LogType.Information) }}</div>
+                <div class="text-body-secondary">Информация</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ERROR -->
+        <div class="alert alert-danger d-flex align-items-center gap-3" role="alert" *ngIf="errorMessage">
+          <div class="fs-4 fw-bold">!</div>
+          <div>{{ errorMessage }}</div>
+        </div>
+
+        <!-- LOGS -->
+        <div class="d-flex flex-column gap-3" *ngIf="logs.length > 0">
+          <div class="card shadow-sm" *ngFor="let log of logs">
+            <!-- LOG HEADER -->
+            <div class="card-header bg-body d-flex align-items-center gap-2 flex-wrap">
+              <!-- LOG TYPE -->
+              <span class="badge" [ngClass]="{
+                  'text-bg-danger': log.logType === LogType.Exseption,
+                  'text-bg-warning': log.logType === LogType.Warning,
+                  'text-bg-info': log.logType === LogType.Information
+                }">
+
+                <ng-container *ngIf="log.logType === LogType.Exseption">Exception</ng-container>
+                <ng-container *ngIf="log.logType === LogType.Warning">Warning</ng-container>
+                <ng-container *ngIf="log.logType === LogType.Information">Information</ng-container>
+                ({{ log.logCount }})
+              </span>
+
+              <!-- LOG TITLE -->
+              <span class="fw-semibold text-break">{{ log.title }} </span>
+            </div>
+
+            <!-- LOG DESCRIPTION -->
+            <div class="card-body">
+              <div class="text-break">{{ log.description }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>

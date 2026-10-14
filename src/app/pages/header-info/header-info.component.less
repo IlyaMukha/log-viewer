@@ -1,0 +1,40 @@
+.hippo-easter-egg {
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+  transform-origin: center bottom;
+}
+
+.hippo-easter-egg.hippo-jumping {
+  animation: hippo-jump 2s ease-in-out;
+}
+
+@keyframes hippo-jump {
+  0%, 100% {
+    transform: translateY(0) rotate(0);
+  }
+
+  15% {
+    transform: translateY(-35px) rotate(-10deg);
+  }
+
+  30% {
+    transform: translateY(0) rotate(10deg);
+  }
+
+  45% {
+    transform: translateY(-45px) rotate(-8deg);
+  }
+
+  60% {
+    transform: translateY(0) rotate(8deg);
+  }
+
+  75% {
+    transform: translateY(-25px) rotate(-5deg);
+  }
+
+  90% {
+    transform: translateY(0) rotate(3deg);
+  }
+}

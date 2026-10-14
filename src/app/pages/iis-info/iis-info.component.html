@@ -1,0 +1,81 @@
+    <div class="d-flex justify-content-between align-items-center p-3 border-bottom bg-body">
+    <div>
+        <div class="fw-semibold">Проекты</div>
+        <div class="text-body-secondary small">IIS / BPMSoft</div>
+    </div>
+    <span class="badge text-bg-primary rounded-pill">{{ projects.length }}</span>
+    </div>
+
+    <!-- LOADING -->
+    <div class="d-flex align-items-center justify-content-center gap-2 p-4 text-body-secondary" *ngIf="projectsLoading">
+    <div class="spinner-border spinner-border-sm" role="status"></div>
+    <span>Получение проектов...</span>
+    </div>
+
+    <!-- ERROR -->
+    <div class="alert alert-danger m-3" role="alert" *ngIf="projectsError">{{ projectsError }}</div>
+
+    <!-- PROJECTS -->
+    <div class="flex-grow-1" *ngIf="!projectsLoading">
+    <div class="border-bottom" *ngFor="let project of projects">
+        <!-- PROJECT HEADER -->
+        <button type="button" 
+        class="btn w-100 rounded-0 text-start p-3 project-item"
+        [class.project-item-selected]="expandedProject === project"
+        (click)="onToggleProject(project)">
+        <div class="d-flex align-items-start gap-2">
+            <span class="light" [class.light-green]="(project.logDirectories.length ? project.logDirectories.length : 0) > 0" [class.light-red]="(project.logDirectories.length ? project.logDirectories.length : 0) === 0"></span>              
+            <span class="flex-shrink-0">{{ expandedProject === project ? '👇' : '👉' }}</span>
+            <div class="min-w-0">
+            <div class="text-truncate">{{ project.name }}</div>
+            <div class="small text-body-secondary text-truncate" [title]="project.physicalPath">
+                {{ project.physicalPath }}
+            </div>
+            </div>
+        </div>
+        </button>
+
+        <!-- LOG DIRECTORIES -->
+        <div class="px-3 pb-3" *ngIf="expandedProject === project">
+        <!-- CAPTION -->
+        <div class="text-uppercase text-body-secondary small fw-semibold mb-2 w-100" *ngIf="project.logDirectories.length !== 0">
+            Папки логов
+        </div>
+
+        <!-- NO FOLDERS -->
+        <div class="text-uppercase text-body-secondary small fw-semibold mb-2" *ngIf="project.logDirectories.length === 0">
+            Папки логов не найдены.
+        </div>
+
+        <!-- FOLDERS -->
+        <div class="list-group">
+            <div *ngFor="let logDirectory of project.logDirectories">
+
+            <div class="list-group-item d-flex align-items-center gap-2">
+                <button
+                type="button"
+                class="btn btn-sm"
+                (click)="onToggleDirectory(logDirectory.name)">
+                {{ expandedDirectory === logDirectory.name ? '👇' : '👉' }}
+                </button>
+
+                <button
+                type="button"
+                class="btn btn-link text-decoration-none d-flex align-items-center gap-2 flex-grow-1 text-start p-0 min-w-0"
+                (click)="onSelectLogDirectory(project, logDirectory.name)"
+                [title]="logDirectory.name">
+                <span>📁</span>
+                <span class="text-truncate">{{ logDirectory.shortName }}</span>
+                </button>
+            </div>
+
+            <div *ngIf="expandedDirectory === logDirectory.name" class="ms-4">
+                <app-directory-tree [items]="directoryContents[logDirectory.name] || []"></app-directory-tree>
+            </div>
+
+            </div>
+        </div>
+                    
+        </div>
+    </div>
+    </div>

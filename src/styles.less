@@ -1,1 +1,107 @@
 /* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.min-h-0 {
+  min-height: 0;
+}
+
+.log-viewer-main {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.project-item {
+  color: var(--bs-body-color);
+  background-color: transparent;
+  border: 0;
+}
+
+.project-item:hover {
+  background-color: var(--bs-secondary-bg);
+}
+
+.project-item-selected {
+  background-color: var(--bs-secondary-bg);
+  color: var(--bs-body-color);
+  font-weight: 600;
+}
+
+.project-item-selected:hover {
+  background-color: var(--bs-secondary-bg);
+}
+
+//Тема
+.theme-toggle {
+  position: relative;
+  width: 58px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background-color: var(--bs-secondary-bg);
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.theme-toggle:hover {
+  box-shadow: 0 2px 8px rgba(187, 255, 0, 0.2);
+}
+
+.theme-toggle-slider {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+
+  width: 24px;
+  height: 24px;
+
+  border-radius: 50%;
+  background-color: var(--bs-body-bg);
+
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+
+  transition: transform 0.25s ease;
+  z-index: 2;
+}
+
+.theme-toggle-dark .theme-toggle-slider {
+  transform: translateX(26px);
+}
+
+.theme-toggle-icon {
+  position: absolute;
+  top: 7px;
+
+  width: 18px;
+  height: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+  line-height: 1;
+  z-index: 1;
+
+  transition: opacity 0.2s ease;
+}
+
+.theme-toggle-moon {
+  left: 7px;
+}
+
+.theme-toggle-sun {
+  right: 7px;
+}
+
+.theme-toggle:not(.theme-toggle-dark) .theme-toggle-sun {
+  opacity: 1;
+}
+
+.theme-toggle-dark .theme-toggle-moon {
+  opacity: 1;
+}
