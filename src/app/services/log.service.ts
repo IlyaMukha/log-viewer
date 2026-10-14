@@ -2,13 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppConfigService } from './app-config.service';
-
-import {
-  LogRequestDto,
-  ResultDto,
-  Project,
-  LogDirectorie
-} from '../models/log.models';
+import {ResultDto} from '../models/log.models';
+import { LogDirectorie, Project } from '../models/project.models';
+import { LogRequestDto } from '../models/requests.models';
 
 @Injectable({
   providedIn: 'root'

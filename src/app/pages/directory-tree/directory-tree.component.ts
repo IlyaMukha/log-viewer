@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LogDirectorie } from '../../models/log.models';
 import { LogService } from '../../services/log.service';
+import { LogDirectorie } from '../../models/project.models';
 
 @Component({
   selector: 'app-directory-tree',

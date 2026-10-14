@@ -1,11 +1,13 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ExseptionLogsDTO, LogType, Project, LogRequestDto, LogDirectorie } from './models/log.models';
+import { LogEntry, LogType } from './models/log.models';
 import { LogService } from './services/log.service';
 import { MainInfoComponent } from '../app/pages/main-info/main-info.component';
 import { HeaderInfoComponent } from '../app/pages/header-info/header-info.component';
 import { IisInfoComponent } from '../app/pages/iis-info/iis-info.component';
+import { LogDirectorie, Project } from './models/project.models';
+import { LogRequestDto } from './models/requests.models';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +26,7 @@ export class AppComponent implements OnInit {
 
   url = '';
 
-  logs: ExseptionLogsDTO[] = [];
+  logs: LogEntry[] = [];
 
   errorMessage = '';
 

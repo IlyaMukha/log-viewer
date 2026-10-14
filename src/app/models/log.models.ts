@@ -1,54 +1,28 @@
 export enum LogType {
-  Information = 0,
+  Information = 3,
   Warning = 1,
   Exseption = 2
 }
 
-export enum FileSystemType {
-  Directory = 0,
-  File = 1
+export interface ResultDto {
+  logsDTOs: LogEntry[];
+  isExseption: boolean;
+  exseptions: EexseptionDto | null;
 }
 
-
-
-
-
-export interface ExseptionLogsDTO {
+export interface LogEntry {
   title: string;
-  description: string;
-  logType: LogType;
-  logCount: number;
+  fullText: string;
+  type: LogType;
+  allLogs: LogRecord[];
 }
 
 export interface EexseptionDto {
   errorMessage: string;
 }
 
-export interface ResultDto {
-  logsDTOs: ExseptionLogsDTO[];
-  isExseption: boolean;
-  exseptions: EexseptionDto | null;
-}
-
-export interface LogRequestDto {
-  url: string;
-  configPath: string;
-}
-
-
-
-
-export interface Project {
-  name: string;
-  physicalPath: string;
-  configTargetPath: string;
-  configPath: string;
-  logsPath: string;
-  logDirectories: LogDirectorie[];
-}
-
-export interface LogDirectorie{
-  name: string;
-  shortName: string;
-  type: FileSystemType
+export interface LogRecord{
+  text:string;
+  dateTime: Date;
+  file: string;
 }

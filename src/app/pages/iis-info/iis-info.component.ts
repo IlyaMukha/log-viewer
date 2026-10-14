@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DirectoryTreeComponent } from '../directory-tree/directory-tree.component';
-import { LogDirectorie, Project } from '../../models/log.models';
+import { LogDirectorie, Project } from '../../models/project.models';
 
 
 @Component({
