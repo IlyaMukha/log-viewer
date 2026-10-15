@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LogEntry, LogType } from '../../models/log.models';
-import { LogService } from '../../services/log.service';
+import { AllLogsModalComponent } from '../all-logs-modal/all-logs-modal.component';
 
 @Component({
   selector: 'app-main-info',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AllLogsModalComponent],
   templateUrl: './main-info.component.html',
   styleUrl: './main-info.component.less'
 })
@@ -19,6 +19,7 @@ export class MainInfoComponent {
     readonly LogType = LogType;
     expandedLogs = new Set<LogEntry>();
     selectedLogType: LogType | null = null;
+    selectedLog: LogEntry | null = null;
 
     get filteredLogs(): LogEntry[] {
         if (this.selectedLogType === null) {
@@ -28,6 +29,14 @@ export class MainInfoComponent {
         return this.logs.filter(
             log => log.type === this.selectedLogType
         );
+    }
+
+    showAllLogs(log: LogEntry): void {
+        this.selectedLog = log;
+    }
+
+    closeAllLogs(): void {
+        this.selectedLog = null;
     }
 
     // Переключение фильтра.

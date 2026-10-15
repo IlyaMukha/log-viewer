@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DirectoryTreeComponent } from '../directory-tree/directory-tree.component';
 import { LogDirectorie, Project } from '../../models/project.models';
+import { LogEntry, LogRecord, LogType } from '../../models/log.models';
+import { AllLogsModalComponent } from '../all-logs-modal/all-logs-modal.component';
 
 
 @Component({
@@ -9,7 +11,8 @@ import { LogDirectorie, Project } from '../../models/project.models';
   standalone: true,
   imports: [
     CommonModule, 
-    DirectoryTreeComponent
+    DirectoryTreeComponent,
+    AllLogsModalComponent
   ],
   templateUrl: './iis-info.component.html',
   styleUrl: './iis-info.component.less'
@@ -37,5 +40,25 @@ export class IisInfoComponent {
     }
     onToggleProject(project: Project): void{
         this.toggleProject.emit(project);
+    }
+
+    selectedLog: LogEntry | null = null;
+    isAllLogsModalOpen = false;
+
+    onLogFileSelected(event: { path: string; records: LogRecord[] }): void {
+      const fileName = event.path.split(/[\\/]/).pop() ?? event.path;
+
+      this.selectedLog = {
+        title: fileName,
+        fullText: event.records.map(record => record.text).join('\n'),
+        type: LogType.Information, // Замени на подходящее значение своего LogType
+        allLogs: event.records
+      };
+
+      this.isAllLogsModalOpen = true;
+    }
+
+    closeAllLogs(): void {
+      this.isAllLogsModalOpen = false;
     }
 }

@@ -98,17 +98,17 @@
             <!-- LOG HEADER -->
             <div class="card-header bg-body d-flex align-items-center gap-2 flex-wrap">
 
-              <span class="badge" [ngClass]="{
+              <button type="button" class="badge btn btn-sm" [ngClass]="{
                   'text-bg-danger': log.type === LogType.Exseption,
                   'text-bg-warning': log.type === LogType.Warning,
                   'text-bg-info': log.type === LogType.Information
-                }">
-
+                }" (click)="showAllLogs(log)">
+                <span>🔍</span>
                 <ng-container *ngIf="log.type === LogType.Exseption">Exception</ng-container>
                 <ng-container *ngIf="log.type === LogType.Warning">Warning</ng-container>
                 <ng-container *ngIf="log.type === LogType.Information">Information</ng-container>
                 ({{ log.allLogs.length }})
-              </span>
+              </button>
 
               <span class="fw-semibold text-break">{{ log.title }}</span>
 
@@ -128,4 +128,5 @@
           </div>
         </div>
       </div>
+      <app-all-logs-modal [selectedLog]="selectedLog" (closeAllLogs)="closeAllLogs()" ></app-all-logs-modal>
     </main>

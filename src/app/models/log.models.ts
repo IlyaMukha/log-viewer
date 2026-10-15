@@ -17,12 +17,12 @@ export interface LogEntry {
   allLogs: LogRecord[];
 }
 
-export interface EexseptionDto {
-  errorMessage: string;
-}
-
 export interface LogRecord{
   text:string;
   dateTime: Date;
   file: string;
+}
+
+export interface EexseptionDto {
+  errorMessage: string;
 }

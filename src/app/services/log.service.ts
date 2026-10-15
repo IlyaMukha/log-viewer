@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppConfigService } from './app-config.service';
-import {ResultDto} from '../models/log.models';
+import {LogRecord, ResultDto} from '../models/log.models';
 import { LogDirectorie, Project } from '../models/project.models';
 import { LogRequestDto } from '../models/requests.models';
 
@@ -34,6 +34,13 @@ export class LogService {
     return this.http.post<ResultDto>(
       `${this.appConfig.apiUrl}/Logs`,
       request
+    );
+  }
+
+  getLogFile(path: string) {
+    return this.http.post<LogRecord[]>(
+      `${this.appConfig.apiUrl}/ReadLogFile`,
+      { path }
     );
   }
 }

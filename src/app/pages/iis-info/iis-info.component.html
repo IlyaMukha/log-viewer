@@ -70,7 +70,8 @@
             </div>
 
             <div *ngIf="expandedDirectory === logDirectory.name" class="ms-4">
-                <app-directory-tree [items]="directoryContents[logDirectory.name] || []"></app-directory-tree>
+                <app-directory-tree [items]="directoryContents[logDirectory.name] || []" (fileSelected)="onLogFileSelected($event)"></app-directory-tree>
+                <app-all-logs-modal *ngIf="isAllLogsModalOpen" [selectedLog]="selectedLog" (closeAllLogs)="closeAllLogs()"></app-all-logs-modal>
             </div>
 
             </div>

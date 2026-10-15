@@ -9,16 +9,27 @@
                 {{ expanded[item.name] ? '👇' : '👉' }}
             </button>
 
-            <button class="btn btn-link text-decoration-none d-flex align-items-center gap-2 flex-grow-1 text-start p-0 min-w-0" [title]="item.name">
+            <!-- <button class="btn btn-link text-decoration-none d-flex align-items-center gap-2 flex-grow-1 text-start p-0 min-w-0" [title]="item.name">
                 <span *ngIf="item.type === 1" class="px-2">📄</span>
                 <span *ngIf="item.type === 0" class="px-2">📁</span>
                 {{ item.shortName }}
+            </button> -->
+            <button type="button"
+                class="btn btn-link text-decoration-none d-flex align-items-center gap-2 flex-grow-1 text-start p-0 min-w-0"
+                [title]="item.name"
+                [disabled]="item.type === 1 && fileLoading[item.name]"
+                (click)="item.type === 1 && onFileClick(item.name)">
+
+                <span *ngIf="item.type === 1" class="px-2">📄</span>
+                <span *ngIf="item.type === 0" class="px-2">📁</span>
+
+                {{ fileLoading[item.name] ? 'Чтение файла...' : item.shortName }}
             </button>
         </div>
 
         <div *ngIf="item.type === 0 && expanded[item.name]" class="ms-4">
             <div *ngIf="loading[item.name]" class="list-group-item text-muted small">Загрузка...</div>
-            <app-directory-tree *ngIf="contents[item.name]" [items]="contents[item.name]"></app-directory-tree>
+            <app-directory-tree *ngIf="contents[item.name]" [items]="contents[item.name]" (fileSelected)="fileSelected.emit($event)"></app-directory-tree>
         </div>
 
     </ng-container>

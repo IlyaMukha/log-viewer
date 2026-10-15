@@ -1,0 +1,73 @@
+<ng-container *ngIf="selectedLog">
+  <div class="modal-backdrop fade show" (click)="onCloseAllLogs()"></div>
+  <div class="modal fade show d-block" tabindex="-1" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document" (click)="$event.stopPropagation()">
+      <div class="modal-content shadow">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title">Все записи лога</h5>
+            <div class="text-body-secondary small text-break">{{ selectedLog.title }}</div>
+          </div>
+
+          <button type="button" class="btn-close" aria-label="Закрыть" (click)="onCloseAllLogs()"></button>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="toggleFilters()" [attr.aria-expanded]="filtersVisible" aria-controls="logFilters">
+                <i class="bi me-1" [ngClass]="filtersVisible ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+                {{ filtersVisible ? '🥷 Скрыть' : '🎛️ Фильтр' }}
+            </button>
+        </div>
+        <div id="logFilters" class="card bg-body-tertiary mb-4" *ngIf="filtersVisible">
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label for="logDateFrom" class="form-label">Дата и время с</label>
+                        <input id="logDateFrom" type="datetime-local" class="form-control" [(ngModel)]="dateFrom" [max]="dateTo || null">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="logDateTo" class="form-label">Дата и время по</label>
+                        <input id="logDateTo" type="datetime-local" class="form-control" [(ngModel)]="dateTo" [min]="dateFrom || null">
+                    </div>
+                    <div class="col-12">
+                        <label for="logTextSearch" class="form-label">Поиск по тексту логов</label>
+                        <input id="logTextSearch" type="text" class="form-control" placeholder="Введите текст для поиска..." [(ngModel)]="searchText">
+                    </div>
+                    <div class="col-12 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <span class="text-body-secondary small">Найдено: {{ filteredLogs.length }} из {{ selectedLog.allLogs.length ? selectedLog.allLogs.length : 0 }}</span>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="resetFilters()"><i class="bi bi-x-circle me-1"></i>🧹Сбросить фильтры</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex flex-column gap-3">
+            <div class="card" *ngFor="let record of filteredLogs; let i = index">
+              <div class="card-header bg-body-tertiary">
+                <div class="d-flex flex-wrap gap-2 align-items-center">
+                  <span class="badge text-bg-secondary">#{{ i + 1 }}</span>
+                  <span class="text-body-secondary small">{{ record.dateTime | date:'dd.MM.yyyy HH:mm:ss' }}</span>
+                  <span class="badge text-bg-secondary text-break">{{ record.file }}</span>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <pre class="log-record-text mb-0">{{ record.text }}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="filteredLogs.length === 0" class="text-center text-body-secondary py-5">
+            <div class="fs-2 mb-2">
+                <i class="bi bi-search"></i>
+            </div>
+            <div class="fw-semibold">Ничего не найдено</div>
+            <div class="small">Попробуйте изменить период или поисковый запрос.</div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="onCloseAllLogs()">Закрыть</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
