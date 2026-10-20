@@ -39,7 +39,6 @@ export class MainInfoComponent {
         this.selectedLog = null;
     }
 
-    // Переключение фильтра.
     filterByType(type: LogType | null): void {
         this.selectedLogType =
         this.selectedLogType === type ? null : type;

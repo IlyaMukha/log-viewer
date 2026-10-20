@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppConfigService } from './app-config.service';
-import {LogRecord, ResultDto} from '../models/log.models';
+import {LogEntry, LogRecord, ResultDto} from '../models/log.models';
 import { LogDirectorie, Project } from '../models/project.models';
 import { LogRequestDto } from '../models/requests.models';
 
@@ -41,6 +41,15 @@ export class LogService {
     return this.http.post<LogRecord[]>(
       `${this.appConfig.apiUrl}/ReadLogFile`,
       { path }
+    );
+  }
+  getEventViewerLogs(startDate: string | null = null, endDate: string | null = null): Observable<LogEntry[]> {
+    return this.http.post<LogEntry[]>(
+      `${this.appConfig.apiUrl}/EventViewer`,
+      {
+        startDate,
+        endDate
+      }
     );
   }
 }

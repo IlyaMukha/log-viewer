@@ -27,19 +27,16 @@ export class AllLogsModalComponent {
         const search = this.searchText.trim().toLocaleLowerCase();
 
         return this.selectedLog.allLogs.filter(record => {
-        // Фильтр по тексту
         if (search && !record.text.toLocaleLowerCase().includes(search)) {
             return false;
         }
 
-        // Дата записи
         const timestamp = new Date(record.dateTime).getTime();
 
         if (Number.isNaN(timestamp)) {
             return !this.dateFrom && !this.dateTo;
         }
 
-        // Начало периода включительно
         if (this.dateFrom) {
             const from = new Date(this.dateFrom).getTime();
 
@@ -48,7 +45,6 @@ export class AllLogsModalComponent {
             }
         }
 
-        // Конец периода включительно, включая всю выбранную минуту
         if (this.dateTo) {
             const to = new Date(this.dateTo).getTime() + 60_000 - 1;
 

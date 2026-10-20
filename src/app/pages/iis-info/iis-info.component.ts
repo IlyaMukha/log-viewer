@@ -4,7 +4,7 @@ import { DirectoryTreeComponent } from '../directory-tree/directory-tree.compone
 import { LogDirectorie, Project } from '../../models/project.models';
 import { LogEntry, LogRecord, LogType } from '../../models/log.models';
 import { AllLogsModalComponent } from '../all-logs-modal/all-logs-modal.component';
-
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: 'app-iis-info',
@@ -29,7 +29,12 @@ export class IisInfoComponent {
     @Output() toggleDirectory = new EventEmitter<string>();
     @Output() toggleProject = new EventEmitter<Project>();
 
-    constructor() {}
+    eventViewerLogs: LogEntry[] = [];
+    
+    selectedLog: LogEntry | null = null;
+    isAllLogsModalOpen = false;
+
+    constructor(private logService: LogService) {}
 
     onSelectLogDirectory(project: Project, name:string): void {
         this.selectLogDirectory.emit({ project, name });
@@ -42,16 +47,13 @@ export class IisInfoComponent {
         this.toggleProject.emit(project);
     }
 
-    selectedLog: LogEntry | null = null;
-    isAllLogsModalOpen = false;
-
     onLogFileSelected(event: { path: string; records: LogRecord[] }): void {
       const fileName = event.path.split(/[\\/]/).pop() ?? event.path;
 
       this.selectedLog = {
         title: fileName,
         fullText: event.records.map(record => record.text).join('\n'),
-        type: LogType.Information, // Замени на подходящее значение своего LogType
+        type: LogType.Information,
         allLogs: event.records
       };
 
@@ -61,4 +63,37 @@ export class IisInfoComponent {
     closeAllLogs(): void {
       this.isAllLogsModalOpen = false;
     }
+
+  loadEventViewerLogs(): void {
+    const endDate = new Date();
+    const startDate = new Date(endDate.getTime() - 24 * 60 * 60 * 1000);
+
+    this.logService.getEventViewerLogs(startDate.toISOString(),endDate.toISOString()).subscribe({
+      next: (logs) => {
+        this.eventViewerLogs = logs;
+
+        const allRecords: LogRecord[] = logs.flatMap(log =>
+          log.allLogs.map(record => ({
+            ...record,
+            file: log.title
+          }))
+        );
+
+        this.selectedLog = {
+          title: 'Просмотр событий Windows',
+          fullText: allRecords.map(record => record.text).join('\n'),
+          type: LogType.Information,
+          allLogs: allRecords
+        };
+
+        this.isAllLogsModalOpen = true;
+      },
+      error: (error) => {
+        console.error(
+          'Ошибка загрузки событий Windows:',
+          error
+        );
+      }
+    });
+  }
 }
