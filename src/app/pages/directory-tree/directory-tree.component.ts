@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LogService } from '../../services/log.service';
 import { LogDirectorie } from '../../models/project.models';
-import { LogRecord } from '../../models/log.models';
+import { LogOfImpact } from '../../models/log.models';
 
 @Component({
   selector: 'app-directory-tree',
@@ -14,7 +14,7 @@ import { LogRecord } from '../../models/log.models';
 export class DirectoryTreeComponent {
   @Input() items: LogDirectorie[] = [];
 
-  @Output() fileSelected = new EventEmitter<{ path: string; records: LogRecord[]; }>();
+  @Output() fileSelected = new EventEmitter<{ path: string; records: LogOfImpact[]; }>();
 
   constructor(private logService: LogService) {}
 

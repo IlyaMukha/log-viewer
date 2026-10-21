@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LogEntry, LogType } from '../../models/log.models';
+import { LogEntity, LogType } from '../../models/log.models';
 import { AllLogsModalComponent } from '../all-logs-modal/all-logs-modal.component';
 
 @Component({
@@ -11,17 +11,17 @@ import { AllLogsModalComponent } from '../all-logs-modal/all-logs-modal.componen
   styleUrl: './main-info.component.less'
 })
 export class MainInfoComponent {
-    @Input() logs: LogEntry[] = [];
+    @Input() logs: LogEntity[] = [];
     @Input() errorMessage: string = "";
     @Input() url: string = "";
     @Input() loading: boolean = false;
 
     readonly LogType = LogType;
-    expandedLogs = new Set<LogEntry>();
+    expandedLogs = new Set<LogEntity>();
     selectedLogType: LogType | null = null;
-    selectedLog: LogEntry | null = null;
+    selectedLog: LogEntity | null = null;
 
-    get filteredLogs(): LogEntry[] {
+    get filteredLogs(): LogEntity[] {
         if (this.selectedLogType === null) {
             return this.logs;
         }
@@ -31,7 +31,7 @@ export class MainInfoComponent {
         );
     }
 
-    showAllLogs(log: LogEntry): void {
+    showAllLogs(log: LogEntity): void {
         this.selectedLog = log;
     }
 
@@ -50,7 +50,7 @@ export class MainInfoComponent {
         ).length;
     }
 
-    toggleLogDetails(log: LogEntry): void {
+    toggleLogDetails(log: LogEntity): void {
         if (this.expandedLogs.has(log)) {
             this.expandedLogs.delete(log);
         } else {
@@ -58,7 +58,7 @@ export class MainInfoComponent {
         }
     }
 
-    isLogExpanded(log: LogEntry): boolean {
+    isLogExpanded(log: LogEntity): boolean {
         return this.expandedLogs.has(log);
     }
 

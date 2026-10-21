@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LogEntry, LogRecord } from '../../models/log.models';
+import { LogEntity, LogOfImpact } from '../../models/log.models';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './all-logs-modal.component.less'
 })
 export class AllLogsModalComponent {
-    @Input() selectedLog: LogEntry | null = null;
+    @Input() selectedLog: LogEntity | null = null;
     @Output() closeAllLogs = new EventEmitter<void>();
 
     searchText = '';
@@ -19,19 +19,19 @@ export class AllLogsModalComponent {
     dateTo = '';
     filtersVisible = true;
 
-    get filteredLogs(): LogRecord[] {
+    get filteredLogs(): LogOfImpact[] {
         if (!this.selectedLog) {
             return [];
         }
 
         const search = this.searchText.trim().toLocaleLowerCase();
 
-        return this.selectedLog.allLogs.filter(record => {
+        return this.selectedLog.logOfImpactList.filter(record => {
         if (search && !record.text.toLocaleLowerCase().includes(search)) {
             return false;
         }
 
-        const timestamp = new Date(record.dateTime).getTime();
+        const timestamp = new Date(record.time).getTime();
 
         if (Number.isNaN(timestamp)) {
             return !this.dateFrom && !this.dateTo;

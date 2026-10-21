@@ -1,25 +1,28 @@
 export enum LogType {
-  Information = 3,
+  Information = 0,
   Warning = 1,
-  Exseption = 2
+  Exseption = 2,
+  Fatal = 3,
+  Debug = 4,
+  Unknow = 5
 }
 
 export interface ResultDto {
-  logsDTOs: LogEntry[];
-  isExseption: boolean;
-  exseptions: EexseptionDto | null;
+  logs: LogEntity[];
 }
 
-export interface LogEntry {
+export interface LogEntity {
   title: string;
   fullText: string;
   type: LogType;
-  allLogs: LogRecord[];
+  startDate: Date;
+  endDate: Date;
+  logOfImpactList: LogOfImpact[];
 }
 
-export interface LogRecord{
+export interface LogOfImpact{
   text:string;
-  dateTime: Date;
+  time: Date;
   file: string;
 }
 

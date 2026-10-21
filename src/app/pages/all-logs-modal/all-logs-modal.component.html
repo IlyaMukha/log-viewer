@@ -33,7 +33,7 @@
                         <input id="logTextSearch" type="text" class="form-control" placeholder="Введите текст для поиска..." [(ngModel)]="searchText">
                     </div>
                     <div class="col-12 d-flex justify-content-between align-items-center flex-wrap gap-2">
-                        <span class="text-body-secondary small">Найдено: {{ filteredLogs.length }} из {{ selectedLog.allLogs.length ? selectedLog.allLogs.length : 0 }}</span>
+                        <span class="text-body-secondary small">Найдено: {{ filteredLogs.length }} из {{ selectedLog.logOfImpactList.length ? selectedLog.logOfImpactList.length : 0 }}</span>
                         <button type="button" class="btn btn-outline-secondary btn-sm" (click)="resetFilters()"><i class="bi bi-x-circle me-1"></i>🧹Сбросить фильтры</button>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
               <div class="card-header bg-body-tertiary">
                 <div class="d-flex flex-wrap gap-2 align-items-center">
                   <span class="badge text-bg-secondary">#{{ i + 1 }}</span>
-                  <span class="text-body-secondary small">{{ record.dateTime | date:'dd.MM.yyyy HH:mm:ss' }}</span>
+                  <span class="text-body-secondary small">{{ record.time | date:'dd.MM.yyyy HH:mm:ss' }}</span>
                   <span class="badge text-bg-secondary text-break">{{ record.file }}</span>
                 </div>
               </div>

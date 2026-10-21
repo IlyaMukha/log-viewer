@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DirectoryTreeComponent } from '../directory-tree/directory-tree.component';
 import { LogDirectorie, Project } from '../../models/project.models';
-import { LogEntry, LogRecord, LogType } from '../../models/log.models';
+import { LogEntity, LogOfImpact, LogType } from '../../models/log.models';
 import { AllLogsModalComponent } from '../all-logs-modal/all-logs-modal.component';
 import { LogService } from '../../services/log.service';
 
@@ -29,9 +29,9 @@ export class IisInfoComponent {
     @Output() toggleDirectory = new EventEmitter<string>();
     @Output() toggleProject = new EventEmitter<Project>();
 
-    eventViewerLogs: LogEntry[] = [];
+    eventViewerLogs: LogEntity[] = [];
     
-    selectedLog: LogEntry | null = null;
+    selectedLog: LogEntity | null = null;
     isAllLogsModalOpen = false;
 
     constructor(private logService: LogService) {}
@@ -47,14 +47,16 @@ export class IisInfoComponent {
         this.toggleProject.emit(project);
     }
 
-    onLogFileSelected(event: { path: string; records: LogRecord[] }): void {
+    onLogFileSelected(event: { path: string; records: LogOfImpact[] }): void {
       const fileName = event.path.split(/[\\/]/).pop() ?? event.path;
 
       this.selectedLog = {
         title: fileName,
         fullText: event.records.map(record => record.text).join('\n'),
         type: LogType.Information,
-        allLogs: event.records
+        startDate: new Date(), //!
+        endDate: new Date(), //!
+        logOfImpactList: event.records
       };
 
       this.isAllLogsModalOpen = true;
@@ -72,8 +74,8 @@ export class IisInfoComponent {
       next: (logs) => {
         this.eventViewerLogs = logs;
 
-        const allRecords: LogRecord[] = logs.flatMap(log =>
-          log.allLogs.map(record => ({
+        const allRecords: LogOfImpact[] = logs.flatMap(log =>
+          log.logOfImpactList.map(record => ({
             ...record,
             file: log.title
           }))
@@ -83,7 +85,9 @@ export class IisInfoComponent {
           title: 'Просмотр событий Windows',
           fullText: allRecords.map(record => record.text).join('\n'),
           type: LogType.Information,
-          allLogs: allRecords
+          startDate: new Date(),
+          endDate: new Date(),
+          logOfImpactList: allRecords
         };
 
         this.isAllLogsModalOpen = true;

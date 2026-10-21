@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LogEntry, LogType } from './models/log.models';
+import { LogEntity, LogType } from './models/log.models';
 import { LogService } from './services/log.service';
 import { MainInfoComponent } from '../app/pages/main-info/main-info.component';
 import { HeaderInfoComponent } from '../app/pages/header-info/header-info.component';
@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
 
   url = '';
 
-  logs: LogEntry[] = [];
+  logs: LogEntity[] = [];
 
   errorMessage = '';
 
@@ -124,18 +124,11 @@ export class AppComponent implements OnInit {
 
     const request: LogRequestDto = {
       url: logDirectory,
-      configPath: project.configPath
     };
 
     this.logService.getLogs(request).subscribe({
       next: (result) => {
-        if (result.isExseption) {
-          this.errorMessage =
-            result.exseptions?.errorMessage ??
-            'Произошла ошибка при обработке логов.';
-          return;
-        }
-        this.logs = result.logsDTOs;
+        this.logs = result.logs;
       },
 
       error: (error) => {
