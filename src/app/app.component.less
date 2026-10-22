@@ -1,0 +1,23 @@
+/* Основная область под шапкой */
+.app-content {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Закреплённая шапка */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+
+/* Независимая прокрутка панелей */
+.app-scroll-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}

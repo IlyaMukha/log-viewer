@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
 
   expandedProject: Project | null = null;
 
-  isDarkTheme = false;
+  isDarkTheme = true;
 
   expandedDirectory: string | null = null;
 

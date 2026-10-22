@@ -1,14 +1,14 @@
-<div class="container-fluid vh-100 d-flex flex-column p-0">
-  
-  <app-header-info 
-    [isDarkTheme]="isDarkTheme" 
-    [projectsLoading]="projectsLoading" 
-    (refreshProjects)="loadProjects()" 
-    (toggleTheme)="toggleTheme()" 
-    class="d-flex flex-shrink-0 justify-content-between align-items-center px-2 py-1 border-bottom bg-body">
+<div class="container-fluid vh-100 d-flex flex-column p-0 overflow-hidden">
+
+  <app-header-info
+    [isDarkTheme]="isDarkTheme"
+    [projectsLoading]="projectsLoading"
+    (refreshProjects)="loadProjects()"
+    (toggleTheme)="toggleTheme()"
+    class="app-header d-flex flex-shrink-0 justify-content-between align-items-center px-2 py-1 border-bottom bg-body">
   </app-header-info>
 
-  <div class="row flex-grow-1 g-0">
+  <div class="row g-0 flex-grow-1 app-content">
 
     <app-iis-info
       [projects]="projects"
@@ -20,15 +20,15 @@
       (selectLogDirectory)="selectLogDirectory($event.project, $event.name)"
       (toggleDirectory)="toggleDirectory($event)"
       (toggleProject)="toggleProject($event)"
-      class="col-12 col-md-4 col-lg-3 col-xl-3 border-end bg-body-tertiary d-flex flex-column">
+      class="col-12 col-md-4 col-lg-3 border-end bg-body-tertiary app-scroll-panel">
     </app-iis-info>
 
-    <app-main-info 
-      [logs]="logs || []" 
-      [errorMessage]="errorMessage" 
-      [url]="url" 
-      [loading]="loading" 
-      class="col-12 col-md-4 col-lg-9 col-xl-9 border-end bg-body-tertiary d-flex flex-column">
+    <app-main-info
+      [logs]="logs || []"
+      [errorMessage]="errorMessage"
+      [url]="url"
+      [loading]="loading"
+      class="col-12 col-md-8 col-lg-9 border-end bg-body-tertiary app-scroll-panel">
     </app-main-info>
 
   </div>

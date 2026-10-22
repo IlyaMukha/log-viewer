@@ -2,11 +2,12 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LogEntity, LogType } from '../../models/log.models';
 import { AllLogsModalComponent } from '../all-logs-modal/all-logs-modal.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-main-info',
   standalone: true,
-  imports: [CommonModule, AllLogsModalComponent],
+  imports: [CommonModule, AllLogsModalComponent, FormsModule],
   templateUrl: './main-info.component.html',
   styleUrl: './main-info.component.less'
 })
@@ -20,15 +21,45 @@ export class MainInfoComponent {
     expandedLogs = new Set<LogEntity>();
     selectedLogType: LogType | null = null;
     selectedLog: LogEntity | null = null;
+    searchText = '';
+    sortField: 'startDate' | 'endDate' = 'endDate';
+    sortDirection: 'asc' | 'desc' = 'desc';
+    filtersVisible = true;
 
     get filteredLogs(): LogEntity[] {
-        if (this.selectedLogType === null) {
-            return this.logs;
-        }
+        const search = this.searchText.trim().toLocaleLowerCase();
 
-        return this.logs.filter(
-            log => log.type === this.selectedLogType
-        );
+        return this.logs
+            .filter(log => {
+                if (
+                    this.selectedLogType !== null &&
+                    log.type !== this.selectedLogType
+                ) {
+                    return false;
+                }
+
+                if (search) {
+                    const title = (log.title ?? '').toLocaleLowerCase();
+                    const fullText = (log.fullText ?? '').toLocaleLowerCase();
+
+                    if (!title.includes(search) && !fullText.includes(search)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            })
+            .sort((a, b) => {
+                const dateA = new Date(a[this.sortField]).getTime();
+                const dateB = new Date(b[this.sortField]).getTime();
+
+                const timeA = Number.isNaN(dateA) ? 0 : dateA;
+                const timeB = Number.isNaN(dateB) ? 0 : dateB;
+
+                return this.sortDirection === 'asc'
+                    ? timeA - timeB
+                    : timeB - timeA;
+            });
     }
 
     showAllLogs(log: LogEntity): void {
@@ -60,6 +91,13 @@ export class MainInfoComponent {
 
     isLogExpanded(log: LogEntity): boolean {
         return this.expandedLogs.has(log);
+    }
+
+    resetFilters(): void {
+        this.searchText = '';
+        this.selectedLogType = null;
+        this.sortField = 'endDate';
+        this.sortDirection = 'desc';
     }
 
 }

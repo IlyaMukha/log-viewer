@@ -27,86 +27,84 @@
         <!-- STATISTICS -->
         <div class="row g-3 mb-3" *ngIf="logs.length > 0">
           <!-- TOTAL -->
-          <div class="col-12 col-sm-6 col-xl-12">
+          <div class="col-12 col-sm-6 col-xl-3">
             <div class="card h-100 border-black shadow-sm filter-card filter-all"
               [class.filter-card-active]="selectedLogType === null"
               (click)="filterByType(null)">
 
-              <div class="card-body">
-                <div class="fs-2 fw-bold">{{ logs.length }}</div>
-                <div class="text-body-secondary">Всего</div>
+              <div class="card-body p-2">
+                <div class="fs-4 fw-bold">{{ logs.length }}</div>
+                <div class="text-body-secondary">All</div>
               </div>
             </div>
           </div>
 
           <!-- EXCEPTIONS -->
           <div class="col-12 col-sm-6 col-xl-2">
-            <div class="card h-100 border-black shadow-sm filter-card filter-error"
+            <div class="card h-80 border-black shadow-sm filter-card filter-error"
               [class.filter-card-active]="selectedLogType === LogType.Exseption"
               (click)="filterByType(LogType.Exseption)">
 
-              <div class="card-body">
-                <div class="fs-2 fw-bold text-danger">
-                  {{ getCount(LogType.Exseption) }}
-                </div>
-                <div class="text-body-secondary">Ошибки</div>
+              <div class="card-body p-2">
+                <div class="fs-4 fw-bold text-danger">{{ getCount(LogType.Exseption) }}</div>
+                <div class="text-body-secondary">Exception</div>
               </div>
             </div>
           </div>
 
           <!-- WARNINGS -->
           <div class="col-12 col-sm-6 col-xl-2">
-            <div class="card h-100 border-black shadow-sm filter-card filter-warning"
+            <div class="card h-80 border-black shadow-sm filter-card filter-warning"
               [class.filter-card-active]="selectedLogType === LogType.Warning"
               (click)="filterByType(LogType.Warning)">
 
-              <div class="card-body">
-                <div class="fs-2 fw-bold text-warning">
+              <div class="card-body p-2">
+                <div class="fs-4 fw-bold text-warning">
                   {{ getCount(LogType.Warning) }}
                 </div>
-                <div class="text-body-secondary">Предупреждения</div>
+                <div class="text-body-secondary">Warning</div>
               </div>
             </div>
           </div>
 
           <!-- INFORMATION -->
           <div class="col-12 col-sm-6 col-xl-2">
-            <div class="card h-100 border-black shadow-sm filter-card filter-info"
+            <div class="card h-80 border-black shadow-sm filter-card filter-info"
               [class.filter-card-active]="selectedLogType === LogType.Information"
               (click)="filterByType(LogType.Information)">
 
-              <div class="card-body">
-                <div class="fs-2 fw-bold text-info">
+              <div class="card-body p-2">
+                <div class="fs-4 fw-bold text-info">
                   {{ getCount(LogType.Information) }}
                 </div>
-                <div class="text-body-secondary">Информация</div>
+                <div class="text-body-secondary">Information</div>
               </div>
             </div>
           </div>
 
           <!-- DEBUG -->
-          <div class="col-12 col-sm-6 col-xl-2">
-            <div class="card h-100 border-black shadow-sm filter-card filter-debug"
+          <div class="col-12 col-sm-6 col-xl-1">
+            <div class="card h-80 border-black shadow-sm filter-card filter-debug"
               [class.filter-card-active]="selectedLogType === LogType.Debug"
               (click)="filterByType(LogType.Debug)">
 
-              <div class="card-body">
-                <div class="fs-3 fw-bold text-success">
+              <div class="card-body p-2">
+                <div class="fs-4 fw-bold text-success">
                   {{ getCount(LogType.Debug) }}
                 </div>
-                <div class="text-body-secondary">Тестирование</div>
+                <div class="text-body-secondary">Test</div>
               </div>
             </div>
           </div>
 
           <!-- FATAL -->
-          <div class="col-12 col-sm-6 col-xl-2">
-            <div class="card h-100 border-black shadow-sm filter-card filter-fatal"
+          <div class="col-12 col-sm-6 col-xl-1">
+            <div class="card h-80 border-black shadow-sm filter-card filter-fatal"
               [class.filter-card-active]="selectedLogType === LogType.Fatal"
               (click)="filterByType(LogType.Fatal)">
 
-              <div class="card-body">
-                <div class="fs-2 fw-bold text-secondary">
+              <div class="card-body p-2">
+                <div class="fs-4 fw-bold text-secondary">
                   {{ getCount(LogType.Fatal) }}
                 </div>
                 <div class="text-body-secondary">Fatal</div>
@@ -115,21 +113,99 @@
           </div>
 
           <!-- Unknow -->
-          <div class="col-12 col-sm-6 col-xl-2">
-            <div class="card h-100 border-black shadow-sm filter-card filter-unknown"
+          <div class="col-12 col-sm-6 col-xl-1">
+            <div class="card h-80 border-black shadow-sm filter-card filter-unknown"
               [class.filter-card-active]="selectedLogType === LogType.Unknow"
               (click)="filterByType(LogType.Unknow)">
 
-              <div class="card-body">
-                <div class="fs-2 fw-bold text-primary">
+              <div class="card-body p-2">
+                <div class="fs-4 fw-bold text-primary">
                   {{ getCount(LogType.Unknow) }}
                 </div>
-                <div class="text-body-secondary">Неопределено</div>
+                <div class="text-body-secondary">Unknow</div>
               </div>
             </div>
           </div>
 
         </div>
+
+        <!-- TEXT FILTER AND SORT -->
+        <div class="card border-0 shadow-sm mb-3" *ngIf="logs.length > 0">
+          <div class="card-header bg-body d-flex justify-content-between align-items-center">
+            <div class="fw-semibold">Фильтрация и сортировка</div>
+
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-sm"
+              (click)="filtersVisible = !filtersVisible"
+              [attr.aria-expanded]="filtersVisible"
+              aria-controls="logFilters">
+              <span class="text-body">
+                {{ filtersVisible ? 'Скрыть' : 'Показать' }}
+              </span>
+              {{ filtersVisible ? ' 👆' : ' 👇' }}
+            </button>
+          </div>
+
+          <div class="card-body" id="logFilters" *ngIf="filtersVisible">
+            <div class="row g-3 align-items-end">
+
+              <!-- TEXT SEARCH -->
+              <div class="col-12 col-lg-6">
+                <label for="logSearch" class="form-label">Поиск по тексту</label>
+                <input
+                  id="logSearch"
+                  type="text"
+                  class="form-control"
+                  placeholder="Введите текст ошибки или название..."
+                  [(ngModel)]="searchText">
+              </div>
+
+              <!-- SORT FIELD -->
+              <div class="col-12 col-sm-6 col-lg-3">
+                <label for="logSortField" class="form-label">Сортировать по</label>
+                <select
+                  id="logSortField"
+                  class="form-select"
+                  [(ngModel)]="sortField">
+                  <option value="startDate">Первое вхождение</option>
+                  <option value="endDate">Последнее вхождение</option>
+                </select>
+              </div>
+
+              <!-- SORT DIRECTION -->
+              <div class="col-12 col-sm-6 col-lg-3">
+                <label for="logSortDirection" class="form-label">Порядок</label>
+                <select
+                  id="logSortDirection"
+                  class="form-select"
+                  [(ngModel)]="sortDirection">
+                  <option value="desc">Сначала новые</option>
+                  <option value="asc">Сначала старые</option>
+                </select>
+              </div>
+
+              <!-- RESULTS AND RESET -->
+              <div class="col-12 d-flex align-items-center justify-content-between flex-wrap gap-2">
+                <span class="text-body-secondary small">
+                  Найдено записей: {{ filteredLogs.length }}
+                </span>
+
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-sm"
+                  (click)="resetFilters()">
+                  Сбросить фильтры
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+
+
 
         <!-- ERROR -->
         <div class="alert alert-danger d-flex align-items-center gap-3" role="alert" *ngIf="errorMessage">
@@ -142,9 +218,7 @@
             <!-- LOG HEADER -->
             <div class="card-header bg-body d-flex flex-column align-items-stretch gap-2">
               <div>
-                <button
-                  type="button"
-                  class="badge btn btn-sm"
+                <button type="button" class="badge btn btn-sm"
                   [ngClass]="{
                     'text-bg-danger': log.type === LogType.Exseption,
                     'text-bg-warning': log.type === LogType.Warning,
@@ -158,7 +232,7 @@
                   <ng-container *ngIf="log.type === LogType.Exseption">Exception</ng-container>
                   <ng-container *ngIf="log.type === LogType.Warning">Warning</ng-container>
                   <ng-container *ngIf="log.type === LogType.Information">Information</ng-container>
-                  <ng-container *ngIf="log.type === LogType.Debug">Debug</ng-container>
+                  <ng-container *ngIf="log.type === LogType.Debug">Test</ng-container>
                   <ng-container *ngIf="log.type === LogType.Fatal">Fatal</ng-container>
                   <ng-container *ngIf="log.type === LogType.Unknow">Unknow</ng-container>
                   ({{ log.logOfImpactList.length }})
@@ -186,7 +260,7 @@
 
           </div>
         </div>
-        
+
       </div>
       <app-all-logs-modal [selectedLog]="selectedLog" (closeAllLogs)="closeAllLogs()" ></app-all-logs-modal>
     </main>

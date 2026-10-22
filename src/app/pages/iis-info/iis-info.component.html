@@ -16,7 +16,7 @@
     <div class="alert alert-danger m-3" role="alert" *ngIf="projectsError">{{ projectsError }}</div>
     <!-- EventViewer-->
     <div class="border-bottom">
-        <button type="button" class="btn w-100 rounded-0 text-start p-3 project-item" (click)="loadEventViewerLogs()">
+        <button type="button" class="btn w-100 rounded-0 text-start p-3 project-item" (click)="loadEventViewerLogs()" disabled>
             <div class="d-flex align-items-start gap-2">
                 <span class="eventViewerLogo">
                     <img [src]="'imgs/eventViewerLogo.png'" [alt]="'Просмотр событий'" class="mascot-image">       
@@ -32,19 +32,19 @@
         <div class="border-bottom" *ngFor="let project of projects">
             <!-- PROJECT HEADER -->
             <button type="button" 
-            class="btn w-100 rounded-0 text-start p-3 project-item"
-            [class.project-item-selected]="expandedProject === project"
-            (click)="onToggleProject(project)">
-            <div class="d-flex align-items-start gap-2">
-                <span class="light" [class.light-green]="(project.logDirectories.length ? project.logDirectories.length : 0) > 0" [class.light-red]="(project.logDirectories.length ? project.logDirectories.length : 0) === 0"></span>              
-                <span class="flex-shrink-0">{{ expandedProject === project ? '👇' : '👉' }}</span>
-                <div class="min-w-0">
-                <div class="text-truncate">{{ project.name }}</div>
-                <div class="small text-body-secondary text-truncate" [title]="project.physicalPath">
-                    {{ project.physicalPath }}
+                class="btn w-100 rounded-0 text-start p-3 project-item"
+                [class.project-item-selected]="expandedProject === project"
+                (click)="onToggleProject(project)">
+                <div class="d-flex align-items-start gap-2">
+                    <span class="light" [class.light-green]="(project.logDirectories.length ? project.logDirectories.length : 0) > 0" [class.light-red]="(project.logDirectories.length ? project.logDirectories.length : 0) === 0"></span>              
+                    <span class="flex-shrink-0">{{ expandedProject === project ? '👇' : '👉' }}</span>
+                    <div class="min-w-0">
+                    <div class="text-truncate">{{ project.name }}</div>
+                    <div class="small text-body-secondary text-truncate" [title]="project.logsPath">
+                        {{ project.logsPath}}
+                    </div>
+                    </div>
                 </div>
-                </div>
-            </div>
             </button>
 
             <!-- LOG DIRECTORIES -->

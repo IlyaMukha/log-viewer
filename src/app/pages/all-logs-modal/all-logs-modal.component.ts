@@ -17,7 +17,7 @@ export class AllLogsModalComponent {
     searchText = '';
     dateFrom = '';
     dateTo = '';
-    filtersVisible = true;
+    filtersVisible = false;
 
     get filteredLogs(): LogOfImpact[] {
         if (!this.selectedLog) {
