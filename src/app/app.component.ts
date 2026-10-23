@@ -59,10 +59,6 @@ export class AppComponent implements OnInit {
     this.loadTheme();
   }
 
-  // -------------------------
-  // Projects
-  // -------------------------
-
   loadProjects(): void {
     this.projectsLoading = true;
     this.projectsError = '';
@@ -90,10 +86,6 @@ export class AppComponent implements OnInit {
     this.expandedProject = project;
   }
 
-  // -------------------------
-  // Log directory
-  // -------------------------
-
   toggleDirectory(dirPath: string): void {
     if (this.expandedDirectory === dirPath) {
       this.expandedDirectory = null;
@@ -116,7 +108,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  selectLogDirectory(project: Project, logDirectory: string): void {
+  selectLogDirectory(logDirectory: string): void {
     this.url = logDirectory;
     this.errorMessage = '';
     this.logs = [];
@@ -142,9 +134,28 @@ export class AppComponent implements OnInit {
       }
     });
   }
-  // -------------------------
-  // Logs
-  // -------------------------
+
+  selectLogFile(request: LogRequestDto): void {
+    this.errorMessage = '';
+    this.logs = [];
+    this.loading = true;
+    
+
+    this.logService.getLogFile(request).subscribe({
+      next: (records) => {
+        this.logs = records.logs;
+        if(this.logs.length > 0 && this.logs[0].logOfImpactList.length > 0){
+          this.url = this.logs[0].logOfImpactList[0].file;
+        }
+      },
+      error: () => {
+        this.errorMessage = 'Ошибка чтения файла:';
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    });
+  }
 
   getLogs(): void {
     this.errorMessage = '';

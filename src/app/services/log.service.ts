@@ -37,10 +37,10 @@ export class LogService {
     );
   }
 
-  getLogFile(path: string) {
-    return this.http.post<LogOfImpact[]>(
+  getLogFile(request: LogRequestDto): Observable<ResultDto> {
+    return this.http.post<ResultDto>(
       `${this.appConfig.apiUrl}/ReadLogFile`,
-      { path }
+      request
     );
   }
   getEventViewerLogs(startDate: string | null = null, endDate: string | null = null): Observable<LogEntity[]> {

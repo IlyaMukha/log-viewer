@@ -11,13 +11,12 @@
             <button type="button"
                 class="btn btn-link text-decoration-none d-flex align-items-center gap-2 flex-grow-1 text-start p-0 min-w-0"
                 [title]="item.name"
-                [disabled]="item.type === 1 && fileLoading[item.name]"
-                (click)="item.type === 1 && onFileClick(item.name)">
+                (click)="item.type === 1 ? onFileClick(item.name) : onFolderClick(item.name)">
 
                 <span *ngIf="item.type === 1" class="px-2">📄</span>
                 <span *ngIf="item.type === 0" class="px-2">📁</span>
 
-                {{ fileLoading[item.name] ? 'Чтение файла...' : item.shortName }}
+                {{ item.shortName }}
             </button>
         </div>
 

@@ -7,7 +7,11 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-main-info',
   standalone: true,
-  imports: [CommonModule, AllLogsModalComponent, FormsModule],
+  imports: [
+    CommonModule, 
+    AllLogsModalComponent, 
+    FormsModule
+  ],
   templateUrl: './main-info.component.html',
   styleUrl: './main-info.component.less'
 })
@@ -24,7 +28,7 @@ export class MainInfoComponent {
     searchText = '';
     sortField: 'startDate' | 'endDate' = 'endDate';
     sortDirection: 'asc' | 'desc' = 'desc';
-    filtersVisible = true;
+    filtersVisible = false;
 
     get filteredLogs(): LogEntity[] {
         const search = this.searchText.trim().toLocaleLowerCase();

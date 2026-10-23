@@ -53,10 +53,17 @@
                   <span class="badge text-bg-secondary">#{{ i + 1 }}</span>
                   <span class="text-body-secondary small">{{ record.time | date:'dd.MM.yyyy HH:mm:ss' }}</span>
                   <span class="badge text-bg-primary text-break">{{ record.file }}</span>
+
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary btn-sm ms-auto"
+                    (click)="toggleRecordText(record)">
+                    <span class="text-light">{{ isRecordTextVisible(record) ? 'Скрыть текст 👆' : 'Показать текст 👇' }}</span>
+                  </button>
                 </div>
               </div>
 
-              <div class="card-body bg-dark">
+              <div class="card-body bg-dark" *ngIf="isRecordTextVisible(record)">
                 <pre class="log-record-text mb-0 text-light">{{ record.text }}</pre>
               </div>
 

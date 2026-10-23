@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LogService } from '../../services/log.service';
 import { LogDirectorie } from '../../models/project.models';
-import { LogOfImpact } from '../../models/log.models';
+import { LogRequestDto } from '../../models/requests.models';
 
 @Component({
   selector: 'app-directory-tree',
@@ -14,16 +14,14 @@ import { LogOfImpact } from '../../models/log.models';
 export class DirectoryTreeComponent {
   @Input() items: LogDirectorie[] = [];
 
-  @Output() fileSelected = new EventEmitter<{ path: string; records: LogOfImpact[]; }>();
-
+  @Output() directorySelected = new EventEmitter<string>();
+  @Output() fileSelected = new EventEmitter<LogRequestDto>();
+  
   constructor(private logService: LogService) {}
 
   expanded: Record<string, boolean> = {};
   contents: Record<string, LogDirectorie[]> = {};
   loading: Record<string, boolean> = {};
-
-  selectedFile: string | null = null;
-  fileLoading: Record<string, boolean> = {};
 
   toggleDirectory(path: string): void {
     if (this.expanded[path]) {
@@ -52,19 +50,14 @@ export class DirectoryTreeComponent {
     });
   }
 
-   onFileClick(path: string): void {
-    this.selectedFile = path;
-    this.fileLoading[path] = true;
+  onFileClick(path: string): void {
+    const request: LogRequestDto = {
+          url: path,
+    };
+    this.fileSelected.emit(request);
+  }
 
-    this.logService.getLogFile(path).subscribe({
-      next: (records) => {
-        this.fileLoading[path] = false;
-        this.fileSelected.emit({ path, records });
-      },
-      error: (error) => {
-        console.error('Ошибка чтения файла:', error);
-        this.fileLoading[path] = false;
-      }
-    });
+  onFolderClick(path: string): void {
+    this.directorySelected.emit(path);
   }
 }

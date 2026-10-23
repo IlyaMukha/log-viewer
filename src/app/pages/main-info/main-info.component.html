@@ -247,9 +247,10 @@
               </div>
 
               <div class="w-100 d-flex justify-content-end">
-                <button type="button" class="btn btn-sm btn-outline-secondary" 
+                <button type="button" 
+                  class="btn btn-sm btn-outline-secondary" 
                   (click)="toggleLogDetails(log)">
-                  {{ isLogExpanded(log) ? 'Меньше текста' : 'Больше текста' }}<span>{{ isLogExpanded(log) ? '👆' : '👇' }}</span>
+                  <span class="text-body">{{ isLogExpanded(log) ? 'Меньше текста' : 'Больше текста' }}<span>{{ isLogExpanded(log) ? '👆' : '👇' }}</span></span>
                 </button>
               </div>
             </div>

@@ -3,7 +3,7 @@
         <div class="fw-semibold">Проекты</div>
         <div class="text-body-secondary small">BPMSoft / Creatio</div>
     </div>
-    <span class="badge text-bg-primary rounded-pill">{{ projects.length }}</span>
+    <span class="badge text-light">{{ projects.length }}</span>
     </div>
 
     <!-- LOADING -->
@@ -74,7 +74,7 @@
                             <button
                             type="button"
                             class="btn btn-link text-decoration-none d-flex align-items-center gap-2 flex-grow-1 text-start p-0 min-w-0"
-                            (click)="onSelectLogDirectory(project, logDirectory.name)"
+                            (click)="onSelectLogDirectory(logDirectory.name)"
                             [title]="logDirectory.name">
                             <span>📁</span>
                             <span class="text-truncate">{{ logDirectory.shortName }}</span>
@@ -82,11 +82,14 @@
                         </div>
 
                         <div *ngIf="expandedDirectory === logDirectory.name" class="ms-4">
-                            <app-directory-tree [items]="directoryContents[logDirectory.name] || []" (fileSelected)="onLogFileSelected($event)"></app-directory-tree>
+                            <app-directory-tree 
+                                [items]="directoryContents[logDirectory.name] || []" 
+                                (fileSelected)="onLogFileSelected($event)"
+                                (directorySelected)="onLogDirectorySelected($event)">
+                            </app-directory-tree>
                         </div>
                     </div>
                 </div>    
             </div>
         </div>
     </div>
-    <app-all-logs-modal *ngIf="isAllLogsModalOpen" [selectedLog]="selectedLog" (closeAllLogs)="closeAllLogs()"></app-all-logs-modal>
