@@ -12,7 +12,7 @@
 
     <div class="d-flex align-items-center gap-2">
       <button type="button"
-        class="theme-toggle"
+        class="theme-toggle btn-outline-secondary"
         [class.theme-toggle-dark]="isDarkTheme"
         (click)="onToggleTheme()"
         [attr.aria-label]="isDarkTheme ? 'Включить светлую тему' : 'Включить тёмную тему'"
@@ -24,9 +24,9 @@
         <span class="theme-toggle-slider"></span>
       </button>
 
-      <button type="button" class="btn btn-outline-primary d-flex align-items-center gap-2" (click)="onRefreshProjects()" [disabled]="projectsLoading">
+      <button type="button" class="btn btn-outline-secondary text-body d-flex align-items-center gap-2" (click)="onRefreshProjects()" [disabled]="projectsLoading">
         <span class="fs-5" [class.spinner-border]="projectsLoading" [class.spinner-border-sm]="projectsLoading">
-          <span *ngIf="!projectsLoading">↻</span>
+          <span *ngIf="!projectsLoading">🔄️</span>
         </span>
         Обновить
       </button>
