@@ -60,4 +60,9 @@ export class DirectoryTreeComponent {
   onFolderClick(path: string): void {
     this.directorySelected.emit(path);
   }
+
+  refreshContents(): void {
+    this.contents = {};
+    this.expanded = {};
+  }
 }

@@ -16,7 +16,7 @@
 
           <div class="col-12">
               <button type="button" class="btn btn-outline-secondary btn-sm mt-2" (click)="toggleFilters()" [attr.aria-expanded]="filtersVisible" aria-controls="logFilters">
-                 <span class="text-light">{{ filtersVisible ? '🥷 Скрыть' : '🎛️ Фильтр' }}</span>
+                 <span class="text-body">{{ filtersVisible ? '🥷 Скрыть' : '🎛️ Фильтр' }}</span>
               </button>
           </div>
         </div>
@@ -50,7 +50,7 @@
 
               <div class="card-header bg-body-tertiary">
                 <div class="d-flex flex-wrap gap-2 align-items-center">
-                  <span class="badge text-bg-secondary">#{{ i + 1 }}</span>
+                  <span class="badge text-bg-secondary">{{ getRandomEmoji() }}{{ i + 1 }}</span>
                   <span class="text-body-secondary small">{{ record.time | date:'dd.MM.yyyy HH:mm:ss' }}</span>
                   <span class="badge text-bg-primary text-break">{{ record.file }}</span>
 
@@ -58,7 +58,7 @@
                     type="button"
                     class="btn btn-outline-secondary btn-sm ms-auto"
                     (click)="toggleRecordText(record)">
-                    <span class="text-light">{{ isRecordTextVisible(record) ? 'Скрыть текст 👆' : 'Показать текст 👇' }}</span>
+                    <span class="text-body">{{ isRecordTextVisible(record) ? 'Скрыть текст 👆' : 'Показать текст 👇' }}</span>
                   </button>
                 </div>
               </div>

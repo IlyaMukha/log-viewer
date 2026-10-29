@@ -3,7 +3,7 @@
         <div class="fw-semibold">Проекты</div>
         <div class="text-body-secondary small">BPMSoft / Creatio</div>
     </div>
-    <span class="badge text-light">{{ projects.length }}</span>
+    <span class="badge text-body">{{ projects.length }}</span>
     </div>
 
     <!-- LOADING -->
@@ -16,7 +16,7 @@
     <div class="alert alert-danger m-3" role="alert" *ngIf="projectsError">{{ projectsError }}</div>
     <!-- EventViewer-->
     <div class="border-bottom">
-        <button type="button" class="btn w-100 rounded-0 text-start p-3 project-item" (click)="loadEventViewerLogs()" disabled>
+        <button type="button" class="btn w-100 rounded-0 text-start p-3 project-item" (click)="loadEventViewerLogs()">
             <div class="d-flex align-items-start gap-2">
                 <span class="eventViewerLogo">
                     <img [src]="'imgs/eventViewerLogo.png'" [alt]="'Просмотр событий'" class="mascot-image">       
@@ -65,19 +65,26 @@
 
                         <div class="list-group-item d-flex align-items-center gap-2">
                             <button
-                            type="button"
-                            class="btn btn-sm"
-                            (click)="onToggleDirectory(logDirectory.name)">
-                            {{ expandedDirectory === logDirectory.name ? '👇' : '👉' }}
+                                type="button"
+                                class="btn btn-sm"
+                                (click)="onToggleDirectory(logDirectory.name)">
+                                {{ expandedDirectory === logDirectory.name ? '👇' : '👉' }}
+                            </button>
+
+                            <button 
+                                type="button"
+                                class="btn btn-link text-decoration-none d-flex align-items-center gap-2 flex-grow-1 text-start p-0 min-w-0"
+                                (click)="onSelectLogDirectory(logDirectory.name)"
+                                [title]="logDirectory.name">
+                                <span>📁</span>
+                                <span class="text-truncate">{{ logDirectory.shortName }}</span>
                             </button>
 
                             <button
-                            type="button"
-                            class="btn btn-link text-decoration-none d-flex align-items-center gap-2 flex-grow-1 text-start p-0 min-w-0"
-                            (click)="onSelectLogDirectory(logDirectory.name)"
-                            [title]="logDirectory.name">
-                            <span>📁</span>
-                            <span class="text-truncate">{{ logDirectory.shortName }}</span>
+                                type="button"
+                                class="btn btn-sm"
+                                (click)="clearContents()">
+                                🔄️
                             </button>
                         </div>
 

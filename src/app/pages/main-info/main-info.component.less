@@ -35,3 +35,73 @@
 .filter-card-active.filter-unknown {
   outline: 2px solid var(--bs-primary);
 }
+
+
+
+.scroll-to-top {
+  position: fixed;
+  right: 3%;
+  bottom: 3%;
+  z-index: 1040;
+
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  background: none;
+  color: white;
+
+  font-size: 36px;
+  cursor: pointer;
+
+  //box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  i {
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+   // background: var(--bs-primary-text-emphasis);
+    //box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
+
+    i {
+      animation: arrow-bounce 0.7s ease-in-out infinite;
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 4px;
+  }
+}
+
+@keyframes arrow-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-to-top,
+  .scroll-to-top i {
+    transition: none;
+    animation: none;
+  }
+}

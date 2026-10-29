@@ -19,8 +19,18 @@ export class AllLogsModalComponent {
     dateFrom = '';
     dateTo = '';
     filtersVisible = false;
+    private readonly emojis = [
+    '😀', '😎', '🤖', '👻', '👾',
+    '🐸', '🦊', '🐼', '🦄', '🐙',
+    '🚀', '🔥', '⚡', '💎', '🍀',
+    '🎯', '🧩', '🥒', '🦖', '🐳'
+    ];
 
     private expandedRecords = new Set<LogOfImpact>();
+
+    getRandomEmoji(): string {
+        return this.emojis[Math.floor(Math.random() * this.emojis.length)];
+    }
 
     toggleRecordText(record: LogOfImpact): void {
         if (this.expandedRecords.has(record)) {

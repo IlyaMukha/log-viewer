@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DirectoryTreeComponent } from '../directory-tree/directory-tree.component';
 import { LogDirectorie, Project } from '../../models/project.models';
@@ -24,15 +24,22 @@ export class IisInfoComponent {
     @Input() expandedDirectory: string | null = null;
     @Input() directoryContents: Record<string, LogDirectorie[]> = {};
 
+    @Output() directoryTreeRefresh = new EventEmitter();
+    @Output() logEventViwerSelected = new EventEmitter();
     @Output() logDirectorySelected = new EventEmitter<string>();
     @Output() logFileSelected = new EventEmitter<LogRequestDto>();
     @Output() selectLogDirectory = new EventEmitter<{name: string}>();
     @Output() toggleDirectory = new EventEmitter<string>();
     @Output() toggleProject = new EventEmitter<Project>();
 
+    @ViewChild(DirectoryTreeComponent)
+    directoryTree?: DirectoryTreeComponent;
+
     eventViewerLogs: LogEntity[] = [];
     
     selectedLog: LogEntity | null = null;
+
+    
 
     constructor(private logService: LogService) {}
 
@@ -56,6 +63,11 @@ export class IisInfoComponent {
     }
 
     loadEventViewerLogs(): void {
+      this.logEventViwerSelected.emit();
+    }
 
+    clearContents(): void {
+      this.directoryTreeRefresh.emit();
+      this.directoryTree?.refreshContents();
     }
 }

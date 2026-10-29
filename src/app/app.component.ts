@@ -157,16 +157,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-  getLogs(): void {
-    this.errorMessage = '';
-    this.logs = [];
-    if (!this.url.trim()) {
-      this.errorMessage = 'Выберите папку с логами.';
-      return;
-    }
-    this.loading = true;
-  }
-
   private loadTheme(): void {
     if (!isPlatformBrowser(this.platformId)) {
       return;
@@ -203,4 +193,26 @@ export class AppComponent implements OnInit {
     );
   }
 
+  selectEventViwer(){
+    this.errorMessage = '';
+    this.logs = [];
+    this.loading = true;
+    
+    this.logService.getEventViewerLogs().subscribe({
+      next: (records) => {
+        this.logs = records.logs;
+        this.url = "Event Viwer"
+      },
+      error: () => {
+        this.errorMessage = 'Ошибка чтения файла:';
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    });
+  }
+  refreshContents(): void {
+    this.directoryContents = {};
+    this.expandedDirectory = null;
+  }
 }

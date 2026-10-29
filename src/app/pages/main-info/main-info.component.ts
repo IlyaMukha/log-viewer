@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, HostListener, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LogEntity, LogType } from '../../models/log.models';
 import { AllLogsModalComponent } from '../all-logs-modal/all-logs-modal.component';
@@ -21,6 +21,11 @@ export class MainInfoComponent {
     @Input() url: string = "";
     @Input() loading: boolean = false;
 
+    @HostListener('scroll')
+        onMainScroll(): void {
+        this.showScrollTop = this.elementRef.nativeElement.scrollTop > 200;
+    }
+
     readonly LogType = LogType;
     expandedLogs = new Set<LogEntity>();
     selectedLogType: LogType | null = null;
@@ -29,6 +34,7 @@ export class MainInfoComponent {
     sortField: 'startDate' | 'endDate' = 'endDate';
     sortDirection: 'asc' | 'desc' = 'desc';
     filtersVisible = false;
+    showScrollTop = false;
 
     get filteredLogs(): LogEntity[] {
         const search = this.searchText.trim().toLocaleLowerCase();
@@ -66,6 +72,8 @@ export class MainInfoComponent {
             });
     }
 
+    constructor(private elementRef: ElementRef<HTMLElement>) {}
+
     showAllLogs(log: LogEntity): void {
         this.selectedLog = log;
     }
@@ -102,6 +110,12 @@ export class MainInfoComponent {
         this.selectedLogType = null;
         this.sortField = 'endDate';
         this.sortDirection = 'desc';
+    }
+    scrollToTop(): void {
+        this.elementRef.nativeElement.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     }
 
 }

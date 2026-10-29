@@ -17,6 +17,8 @@
       [expandedProject]="expandedProject"
       [expandedDirectory]="expandedDirectory"
       [directoryContents]="directoryContents"
+      (directoryTreeRefresh)="refreshContents()"
+      (logEventViwerSelected)="selectEventViwer()"
       (logDirectorySelected)="selectLogDirectory($event)"
       (logFileSelected)="selectLogFile($event)"
       (selectLogDirectory)="selectLogDirectory($event.name)"

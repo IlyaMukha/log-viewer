@@ -43,8 +43,8 @@ export class LogService {
       request
     );
   }
-  getEventViewerLogs(startDate: string | null = null, endDate: string | null = null): Observable<LogEntity[]> {
-    return this.http.post<LogEntity[]>(
+  getEventViewerLogs(startDate: string | null = null, endDate: string | null = null): Observable<ResultDto> {
+    return this.http.post<ResultDto>(
       `${this.appConfig.apiUrl}/EventViewer`,
       {
         startDate,
